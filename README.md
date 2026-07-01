@@ -118,7 +118,7 @@ text2sql/
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/text2sql.git
+git clone https://github.com/Haunter05/text2sql.git
 cd text2sql
 ```
 
