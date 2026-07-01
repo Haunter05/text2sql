@@ -1,154 +1,67 @@
 import { useState } from "react";
 import axios from "axios";
 
+import Header from "./components/Header";
+import QueryInput from "./components/QueryInput";
+import SqlViewer from "./components/SqlViewer";
+import ResultsTable from "./components/ResultsTable";
+
 function App() {
   const [question, setQuestion] = useState("");
   const [sql, setSql] = useState("");
   const [result, setResult] = useState<Record<string, unknown>[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const askQuestion = async () => {
-  try {   
+    if (!question.trim()) return;
 
-    const response = await axios.post(
-      "http://127.0.0.1:8000/query",
-      {
-        question: question
-      }
-    );
+    try {
+      setLoading(true);
 
-    setSql(response.data.generated_sql);
-    setResult(response.data.result);
+      const response = await axios.post(
+        "http://127.0.0.1:8000/query",
+        {
+          question,
+        }
+      );
 
-  } catch (error) {
-    console.error(error);
-  }
-};
+      setSql(response.data.generated_sql);
+      setResult(response.data.result);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-10">
+    <div className="min-h-screen bg-slate-950 text-white">
 
-      <h1 className="text-5xl font-bold text-center mb-10">
-        Text2SQL
-      </h1>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#4338ca25,transparent_60%)]" />
 
-      <div className="max-w-4xl mx-auto">
+      <div className="relative px-6 py-10">
 
-        <input
-            type="text"
-            placeholder="Ask a question..."
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            className="
-              w-full
-              p-4
-              rounded-lg
-              bg-slate-800
-              border
-              border-slate-700
-              outline-none
-            "
-        />
+        <Header />
 
-      <button
-          onClick={askQuestion}
-          className="
-            mt-4
-            px-6
-            py-3
-            bg-blue-600
-            rounded-lg
-            hover:bg-blue-700
-          "
-      >
-        Ask
-      </button>
+        <div className="max-w-6xl mx-auto space-y-8">
 
-    <p className="mt-4 text-green-400">
-      {question}
-    </p>
+          <QueryInput
+            question={question}
+            setQuestion={setQuestion}
+            onSubmit={askQuestion}
+            loading={loading}
+          />
 
-        <div className="mt-10">
+          <SqlViewer sql={sql} />
 
-          <h2 className="text-2xl font-semibold mb-3">
-            Generated SQL
-          </h2>
-
-          <div className="bg-slate-800 p-4 rounded-lg">
-            <pre>{sql}</pre>
-          </div>
-
-        </div>
-
-        <div className="mt-10">
-
-          <h2 className="text-2xl font-semibold mb-3">
-            Results
-          </h2>
-
-      <div className="bg-slate-800 p-4 rounded-lg overflow-x-auto">
-
-        {result.length > 0 ? (
-
-          <table className="min-w-full border-collapse">
-
-            <thead>
-
-              <tr>
-
-                {Object.keys(result[0]).map((key) => (
-
-                  <th
-                    key={key}
-                    className="border border-slate-600 px-4 py-2 text-left"
-                  >
-                    {key}
-                  </th>
-
-                ))}
-
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              {result.map((row, index) => (
-
-                <tr key={index}>
-
-                  {Object.values(row).map((value, i) => (
-
-                    <td
-                      key={i}
-                      className="border border-slate-600 px-4 py-2"
-                    >
-                      {String(value)}
-                    </td>
-
-                  ))}
-
-                </tr>
-
-              ))}
-
-            </tbody>
-
-          </table>
-
-        ) : (
-
-          <p>No results</p>
-
-        )}
-
-      </div>
+          <ResultsTable result={result} />
 
         </div>
 
       </div>
 
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
