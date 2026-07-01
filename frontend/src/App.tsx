@@ -4,10 +4,10 @@ import axios from "axios";
 function App() {
   const [question, setQuestion] = useState("");
   const [sql, setSql] = useState("");
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState<Record<string, unknown>[]>([]);
 
   const askQuestion = async () => {
-  try {
+  try {   
 
     const response = await axios.post(
       "http://127.0.0.1:8000/query",
@@ -85,11 +85,63 @@ function App() {
             Results
           </h2>
 
-          <div className="bg-slate-800 p-4 rounded-lg">
-              <pre>
-                {JSON.stringify(result, null, 2)}
-               </pre>
-          </div>
+      <div className="bg-slate-800 p-4 rounded-lg overflow-x-auto">
+
+        {result.length > 0 ? (
+
+          <table className="min-w-full border-collapse">
+
+            <thead>
+
+              <tr>
+
+                {Object.keys(result[0]).map((key) => (
+
+                  <th
+                    key={key}
+                    className="border border-slate-600 px-4 py-2 text-left"
+                  >
+                    {key}
+                  </th>
+
+                ))}
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              {result.map((row, index) => (
+
+                <tr key={index}>
+
+                  {Object.values(row).map((value, i) => (
+
+                    <td
+                      key={i}
+                      className="border border-slate-600 px-4 py-2"
+                    >
+                      {String(value)}
+                    </td>
+
+                  ))}
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        ) : (
+
+          <p>No results</p>
+
+        )}
+
+      </div>
 
         </div>
 

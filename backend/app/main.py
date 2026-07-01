@@ -29,24 +29,24 @@ def home():
     }
 
 
-@app.get("/students")
-def get_students():
+# @app.get("/students")
+# def get_students():
 
-    db = SessionLocal()
+#     db = SessionLocal()
 
-    try:
+#     try:
 
-        result = db.execute(text("SELECT * FROM students"))
+#         result = db.execute(text("SELECT * FROM students"))
 
-        students = []
+#         students = []
 
-        for row in result:
-            students.append(dict(row._mapping))
+#         for row in result:
+#             students.append(dict(row._mapping))
 
-        return students
+#         return students
 
-    finally:
-        db.close()
+#     finally:
+#         db.close()
 
 
 @app.post("/query")
