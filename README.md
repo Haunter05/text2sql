@@ -1,62 +1,53 @@
 # 🤖 Text2SQL Assistant
 
-An AI-powered Text-to-SQL application that converts natural language questions into PostgreSQL queries using a local Large Language Model (LLM). The generated SQL is validated, executed on a PostgreSQL database, and the results are displayed through a modern React frontend.
+An AI-powered Text-to-SQL application that converts natural language questions into PostgreSQL queries using a locally running Large Language Model (LLM). The generated SQL is validated, executed on a PostgreSQL database, and the results are displayed through a modern React frontend.
 
 ---
 
-## 📸 Preview
+## 🚀 Features
 
-> Add screenshots here after the UI redesign.
-
-| Home Page | Query Results |
-|-----------|---------------|
-| ![Home](README_assets/home.png) | ![Results](README_assets/results.png) |
-
----
-
-## ✨ Features
-
-- 🧠 Natural Language → SQL conversion
-- 🤖 Local LLM using **Ollama + Qwen2.5 (1.5B)**
+- 🤖 Natural Language to SQL conversion
+- 🧠 Local LLM using **Ollama + Qwen2.5 (1.5B)**
 - 🛡️ SQL validation before execution
 - 🗄️ PostgreSQL database integration
-- ⚡ FastAPI REST API
+- ⚡ FastAPI backend
 - ⚛️ React + TypeScript frontend
-- 🎨 Tailwind CSS UI
+- 🎨 Tailwind CSS user interface
 - 📊 Dynamic results table
+- 📋 Copy generated SQL
 - 💻 Fully local execution (No cloud APIs)
 
 ---
 
-# 🏗️ Architecture
+# 🏗️ System Architecture
 
 ```text
-                 User
-                   │
-                   ▼
-        React + TypeScript + Tailwind
-                   │
-                 Axios
-                   │
-                   ▼
-             FastAPI Backend
-                   │
-                   ▼
-          Ollama + Qwen2.5 (1.5B)
-                   │
-             SQL Generation
-                   │
-                   ▼
-            SQL Validator
-                   │
-                   ▼
-            PostgreSQL Database
-                   │
-                   ▼
-          Query Results (JSON)
-                   │
-                   ▼
-        Dynamic Results Table
+                     User
+                       │
+                       ▼
+        React + TypeScript + Tailwind CSS
+                       │
+                     Axios
+                       │
+                       ▼
+               FastAPI Backend
+                       │
+                       ▼
+            Ollama + Qwen2.5 (1.5B)
+                       │
+                SQL Generation
+                       │
+                       ▼
+                 SQL Validator
+                       │
+                       ▼
+             PostgreSQL Database
+                       │
+                       ▼
+              Query Results (JSON)
+                       │
+                       ▼
+             Dynamic Results Table
 ```
 
 ---
@@ -70,6 +61,7 @@ An AI-powered Text-to-SQL application that converts natural language questions i
 - Vite
 - Tailwind CSS
 - Axios
+- Lucide React
 
 ## Backend
 
@@ -85,7 +77,7 @@ An AI-powered Text-to-SQL application that converts natural language questions i
 
 ---
 
-# 📁 Project Structure
+# 📂 Project Structure
 
 ```text
 text2sql/
@@ -95,13 +87,23 @@ text2sql/
 │   │   ├── main.py
 │   │   ├── database.py
 │   │   ├── llm.py
-│   │   └── validator.py
+│   │   ├── validator.py
+│   │   └── test_generate_sql.py
+│   │
 │   ├── requirements.txt
 │   └── .env.example
 │
 ├── frontend/
-│   ├── src/
 │   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Header.tsx
+│   │   │   ├── QueryInput.tsx
+│   │   │   ├── SqlViewer.tsx
+│   │   │   └── ResultsTable.tsx
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   │
 │   ├── package.json
 │   └── vite.config.ts
 │
@@ -111,12 +113,12 @@ text2sql/
 
 ---
 
-# 🚀 Getting Started
+# ⚙️ Installation
 
-## 1. Clone the repository
+## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Haunter05/text2sql.git
+git clone https://github.com/<your-username>/text2sql.git
 cd text2sql
 ```
 
@@ -170,7 +172,7 @@ npm install
 npm run dev
 ```
 
-Visit:
+Open:
 
 ```
 http://localhost:5173
@@ -178,7 +180,7 @@ http://localhost:5173
 
 ---
 
-# 💡 Example
+# 💡 Example Query
 
 ### Input
 
@@ -195,7 +197,7 @@ JOIN student_performance sp
 ON s.student_id = sp.student_id
 JOIN subjects sub
 ON sp.subject_id = sub.subject_id
-WHERE sub.subject_name='DBMS'
+WHERE sub.subject_name = 'DBMS'
 AND sp.marks > 90;
 ```
 
@@ -209,34 +211,47 @@ AND sp.marks > 90;
 
 ---
 
-# 📌 Current Features
+# 📸 Screenshots
 
-- ✅ Natural language to SQL conversion
-- ✅ SQL execution on PostgreSQL
-- ✅ SQL validation
-- ✅ Dynamic table rendering
-- ✅ Modern React frontend
-- ✅ Local LLM inference
+>Screenshots.
+
+### Home Page
+
+```
+screenshots/home.png
+```
+
+### Generated SQL
+
+```
+screenshots/sql.png
+```
+
+### Query Results
+
+```
+screenshots/results.png
+```
 
 ---
 
-# 🔮 Future Improvements
+# 📌 Current Capabilities
 
-- Better prompt engineering
-- Multi-database support
-- Query history
-- User authentication
-- Export results to CSV
-- Docker support
-- Schema auto-discovery
-- Syntax highlighting for SQL
-- Responsive dashboard
+- Natural language query processing
+- SQL generation using a local LLM
+- SQL validation for security
+- Query execution on PostgreSQL
+- Dynamic table generation
+- SQL viewer with line numbers
+- Copy SQL functionality
+- Modern responsive UI
+
 
 ---
 
-# 📄 License
+# 📜 License
 
-This project is developed for educational and learning purposes.
+This project is intended for educational and learning purposes.
 
 ---
 
@@ -244,4 +259,4 @@ This project is developed for educational and learning purposes.
 
 **Subhra Sankha Majumder**
 
-If you found this project useful, consider giving it a ⭐ on GitHub.
+If you found this project helpful, consider giving it a ⭐ on GitHub!
