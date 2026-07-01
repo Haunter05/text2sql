@@ -210,28 +210,19 @@ AND sp.marks > 90;
 | Megha Bose | 91 |
 
 ---
-
-# 📸 Screenshots
-
->Screenshots.
+## 📸 Screenshots
 
 ### Home Page
 
-```
-screenshots/home.png
-```
+![Home Page](screenshots/home.png)
 
 ### Generated SQL
 
-```
-screenshots/sql.png
-```
+![Generated SQL](screenshots/sql.png)
 
 ### Query Results
 
-```
-screenshots/results.png
-```
+![Query Results](screenshots/results.png)
 
 ---
 
